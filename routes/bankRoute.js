@@ -1,10 +1,12 @@
 const express = require("express");
 const router = express.Router();
 
-const { createBankAccount,transaction } = require("../controllers/bankController")
+const { createBankAccount,usertransaction,admintransaction,suppliertransaction } = require("../controllers/bankController")
 
 router.route("/createbankaccount").post(createBankAccount);
-router.route("/transaction").post(transaction);
+router.route("/usertransaction").post(usertransaction);
+router.route("/admintransaction").post(admintransaction);
+router.route("/suppliertransaction").post(suppliertransaction);
 
 
 
