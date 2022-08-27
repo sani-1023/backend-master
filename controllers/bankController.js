@@ -138,3 +138,5 @@ exports.suppliertransaction = catchAsyncErrors(async (req, res, next) => {
     bankInfoSupplier,
   });
 });
+
+

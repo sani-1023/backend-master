@@ -15,10 +15,12 @@ app.use(cookieParser())
 const product = require("./routes/productRoute")
 const bank = require("./routes/bankRoute")
 const user = require("./routes/userRoute")
+const order = require("./routes/orderRoute")
 
 app.use("/api/v1",product)
 app.use("/api/v1",bank)
 app.use("/api/v1",user)
+app.use("/api/v1",order)
 
 
 app.use(errorMiddleWare)
