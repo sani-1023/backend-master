@@ -1,5 +1,5 @@
 const Product = require("../models/productModels");
-const errorHandler = require("../utils/errorHandler");
+const errorHandler = require("../utils/errorhandler");
 
 
 //creating products

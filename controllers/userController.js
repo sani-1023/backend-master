@@ -4,6 +4,9 @@ const catchAsyncErrors = require('../middleware/catchAsyncErrors')
 const sendToken = require('../utils/jwtToken')
 const sendEmail = require('../utils/sendEmail')
 const crypto = require('crypto')
+const multer = require("multer");
+const fs = require("fs");
+const imageModel = require('../models/imageModel')
 
 
 
@@ -23,6 +26,70 @@ exports.registerUser = catchAsyncErrors(async(req,res,next)=>{
 
     sendToken(user,201,res)
 })
+
+
+
+//image upload of a user
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads");
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  },
+});
+
+const upload = multer({ storage: storage });
+
+
+exports.uploadImage = catchAsyncErrors(upload.single("file"),async(req,res,next)=>{
+  console.log("Upload");
+  const saveImage =  imageModel({
+        userId: "req.user.id",
+        img: {
+          data: fs.readFileSync("uploads/"+req.file.filename),
+          contentType: "image/png",
+        },
+    
+      });
+
+
+      console.log(saveImage);
+      saveImage
+        .save()
+        .then((res) => {
+          console.log("image is saved");
+        })
+        .catch((err) => {
+          console.log(err, "error has occur");
+        });
+        res.send('image is saved')
+})
+
+
+
+// app.post("/upload", upload.single("file"), (req, res) => {
+//   const saveImage =  User({
+//     name: req.body.name,
+//     img: {
+//       data: fs.readFileSync("uploads/"+req.file.filename),
+//       contentType: "image/png",
+//     },
+
+//   });
+//   saveImage
+//     .save()
+//     .then((res) => {
+//       console.log("image is saved");
+//     })
+//     .catch((err) => {
+//       console.log(err, "error has occur");
+//     });
+//     res.send('image is saved')
+// });
+
+
 
 
 //Login user
