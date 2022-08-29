@@ -4,16 +4,18 @@ const catchAsyncErrors = require('../middleware/catchAsyncErrors')
 const sendToken = require('../utils/jwtToken')
 const sendEmail = require('../utils/sendEmail')
 const crypto = require('crypto')
-const multer = require("multer");
-
-const fs = require("fs");
 const imageModel = require('../models/imageModel')
+
+const cors = require('cors');
+const jwt = require('jsonwebtoken')
+
+
+const multer = require("multer");
+const fs = require("fs");
 
 
 
 //Register a user
-
-
 
 exports.registerUser = catchAsyncErrors(async(req,res,next)=>{
     const {name,email,password,phone,bankAccount} = req.body 
@@ -34,41 +36,41 @@ exports.registerUser = catchAsyncErrors(async(req,res,next)=>{
 
 //image upload of a user
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads");
-  },
-  filename: (req, file, cb) => {
-    cb(null, file.originalname);
-  },
-});
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, "uploads");
+//   },
+//   filename: (req, file, cb) => {
+//     cb(null, file.originalname);
+//   },
+// });
 
-const upload = multer({ storage: storage });
+// const upload = multer({ storage: storage });
 
 
-exports.uploadImage = catchAsyncErrors(upload.single("file"),async(req,res,next)=>{
-  console.log("Upload");
-  const saveImage =  imageModel({
-        userId: "req.user.id",
-        img: {
-          data: fs.readFileSync("/controllers/uploads"+req.file.filename),
-          contentType: "image/png",
-        },
+// exports.uploadImage = catchAsyncErrors(upload.single("file"),async(req,res,next)=>{
+//   console.log("Upload");
+//   const saveImage =  imageModel({
+//         userId: "req.user.id",
+//         img: {
+//           data: fs.readFileSync("uploads/"+req.file.filename),
+//           contentType: "image/png",
+//         },
     
-      });
+//       });
 
 
-      console.log(saveImage);
-      saveImage
-        .save()
-        .then((res) => {
-          console.log("image is saved");
-        })
-        .catch((err) => {
-          console.log(err, "error has occur");
-        });
-        res.send('image is saved')
-})
+//       console.log(saveImage);
+//       saveImage
+//         .save()
+//         .then((res) => {
+//           console.log("image is saved");
+//         })
+//         .catch((err) => {
+//           console.log(err, "error has occur");
+//         });
+//         res.send('image is saved')
+// })
 
 
 
@@ -106,7 +108,7 @@ exports.loginUser = catchAsyncErrors(async(req,res,next)=>{
 
     const user = await User.findOne({email:email}).select("+password")
     console.log("login")
-    console.log(user)
+    //console.log(user)
     
     if(!user){
         return next(new ErrorHandler("Invalid email or password",401))
@@ -141,6 +143,47 @@ exports.logOut = catchAsyncErrors(async(req,res,next)=>{
 
 
 })
+
+//image upload
+
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, "uploads");
+//   },
+//   filename: (req, file, cb) => {
+//     cb(null, file.originalname);
+//   },
+// });
+
+// const upload = multer({ storage: storage });
+
+// exports.imageUp = catchAsyncErrors(upload.single("file"), async(req,res,next) => {
+//   const user = await User.findById(req.user.id);
+//   console.log("from image",user);
+//   const saveImage =  imageModel({
+//     userId:"alklaiwohd",
+//     img: {
+//       data: fs.readFileSync("uploads/"+req.file.filename),
+//       contentType: "image/png",
+//     },
+//   });
+
+  
+//   saveImage
+//     .save()
+//     .then((res) => {
+//       console.log("image is saved");
+//     })
+//     .catch((err) => {
+//       console.log(err, "error has occur");
+//     });
+//     res.send('image is saved')
+// });
+
+
+
+
+
 
 //Forgot password
 
@@ -242,12 +285,14 @@ exports.logOut = catchAsyncErrors(async(req,res,next)=>{
 // Get User Detail
 exports.getUserDetails = catchAsyncErrors(async (req, res, next) => {
   const user = await User.findById(req.user.id);
+  //console.log("controller user",user)
+ // const allData = await imageModel.find({userId:'630a8efa0ea95714d750d642'});
 
-  
-  console.log(user)
+
   res.status(200).json({
     success: true,
     user,
+    //allData
   });
 });
 
