@@ -1,14 +1,19 @@
 const express  = require("express")
 const cookieParser = require('cookie-parser')
+const cors = require("cors")
+const bodyParser = require("body-parser")
 
 const app = express()
 const errorMiddleWare = require("./middleware/error")
 
 
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 
 app.use(express.json())
 app.use(cookieParser())
+app.use(cors());
 
 
 // route import

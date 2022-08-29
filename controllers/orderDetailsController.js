@@ -31,16 +31,15 @@ exports.adminOrderDetails = catchAsyncErrors(async (req, res, next) => {
     }
 
     res.status(200).json({
-        success: true,
         adminOrder
     })
 
 });
 
 
-exports.supplierOrderDetails = catchAsyncErrors(async (req, res, next) => {
+exports.supplierOrderDetails = catchAsyncErrors(async (req, res, next) => { 
     
-    const supplierOrder = await transactionModel.find().sort({"createdAt": -1});
+    const supplierOrder = await transactionModel.find({"status": { $gt: 0 } }).sort({"createdAt": -1});
 
     if(!supplierOrder)
     {
@@ -51,7 +50,7 @@ exports.supplierOrderDetails = catchAsyncErrors(async (req, res, next) => {
         success: true,
         supplierOrder
     })
-
+ 
 });
 
 

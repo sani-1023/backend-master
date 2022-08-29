@@ -5,12 +5,15 @@ const sendToken = require('../utils/jwtToken')
 const sendEmail = require('../utils/sendEmail')
 const crypto = require('crypto')
 const multer = require("multer");
+
 const fs = require("fs");
 const imageModel = require('../models/imageModel')
 
 
 
 //Register a user
+
+
 
 exports.registerUser = catchAsyncErrors(async(req,res,next)=>{
     const {name,email,password,phone,bankAccount} = req.body 
@@ -48,7 +51,7 @@ exports.uploadImage = catchAsyncErrors(upload.single("file"),async(req,res,next)
   const saveImage =  imageModel({
         userId: "req.user.id",
         img: {
-          data: fs.readFileSync("uploads/"+req.file.filename),
+          data: fs.readFileSync("/controllers/uploads"+req.file.filename),
           contentType: "image/png",
         },
     
