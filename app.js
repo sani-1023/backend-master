@@ -1,6 +1,6 @@
 const express  = require("express")
 const cookieParser = require('cookie-parser')
-const imageModel = require("../backend/models/imageModel");
+const imageModel = require("./models/imageModel");
 const app = express()
 const errorMiddleWare = require("./middleware/error")
 const cors = require('cors');
