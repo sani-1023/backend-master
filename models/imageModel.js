@@ -11,6 +11,10 @@ const imgSchema = new mongoose.Schema({
       data: Buffer,
       contentType: String,
     },
+    createdAt:{
+      type:Date,
+      default:Date.now
+    }
   });
 
 module.exports = ImageModel = mongoose.model("Image", imgSchema);
