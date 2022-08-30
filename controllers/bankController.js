@@ -64,7 +64,7 @@ exports.admintransaction = catchAsyncErrors(async (req, res, next) => {
   const totalAmount = adminTransaction.totalAmount;
 
   const bankInfoUser = await Bank.findOne({ accountNumber: userBankaccount });
-console.log("check",bankInfoUser);
+// console.log("check",bankInfoUser);
 
   const bankInfoEcommerce = await Bank.findOne({
     accountNumber: ecommerceAccount,

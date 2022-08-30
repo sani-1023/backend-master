@@ -12,7 +12,7 @@ exports.createProduct = async (req, res,next) => {
      product,
    });
  };
-
+ 
 
 //get all products
 

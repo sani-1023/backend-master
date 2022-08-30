@@ -107,7 +107,7 @@ exports.loginUser = catchAsyncErrors(async(req,res,next)=>{
     }
 
     const user = await User.findOne({email:email}).select("+password")
-    console.log("login")
+    //console.log("login")
     //console.log(user)
     
     if(!user){
@@ -285,7 +285,7 @@ exports.logOut = catchAsyncErrors(async(req,res,next)=>{
 // Get User Detail
 exports.getUserDetails = catchAsyncErrors(async (req, res, next) => {
   const user = await User.findById(req.user.id);
-  //console.log("controller user",user)
+  console.log("controller user")
  // const allData = await imageModel.find({userId:'630a8efa0ea95714d750d642'});
 
 
