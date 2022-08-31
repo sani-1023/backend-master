@@ -14,6 +14,20 @@ exports.createBankAccount = async (req, res, next) => {
   });
 };
 
+exports.bankInfo = catchAsyncErrors(async (req, res, next) => {
+  //const { bankAccount } = req.body;
+
+  const bankInfo = await Bank.find();
+  res.status(200).json({
+    success: true,
+    bankInfo,
+  });
+});
+
+
+
+
+
 exports.usertransaction = catchAsyncErrors(async (req, res, next) => {
   const { bankAccount, totalAmount, secretKey, userId } = req.body;
 
