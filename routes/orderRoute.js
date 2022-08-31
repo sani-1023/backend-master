@@ -7,7 +7,7 @@ const { userOrderDetails,adminOrderDetails,supplierOrderDetails } = require("../
 
 
 
-router.route("/userorder/:id").get(userOrderDetails);
+router.route("/userorder").post(userOrderDetails);
 router.route("/adminorder").get(adminOrderDetails);
 router.route("/supplierorder").get(supplierOrderDetails);
 

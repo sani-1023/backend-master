@@ -4,8 +4,9 @@ const ErrorHandler = require("../utils/errorhandler");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 
 exports.userOrderDetails = catchAsyncErrors(async (req, res, next) => {
-    const userId = req.params.id;
-    const userOrder = await transactionModel.find({userId: userId}).sort({"createdAt": -1});
+    const {userinfo} = req.body;
+    // console.log(req.body);
+    const userOrder = await transactionModel.find({userId: userinfo}).sort({"createdAt": -1});
 
     if(!userOrder)
     {
