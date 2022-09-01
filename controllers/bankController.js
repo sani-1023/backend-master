@@ -11,8 +11,8 @@ exports.createBankAccount = async (req, res, next) => {
   res.status(200).json({
     success: true,
     bank,
-  });
-};
+  }); 
+}; 
 
 exports.bankInfo = catchAsyncErrors(async (req, res, next) => {
   //const { bankAccount } = req.body;
@@ -89,7 +89,7 @@ exports.admintransaction = catchAsyncErrors(async (req, res, next) => {
 
   await bankInfoUser.save();
 
-  bankInfoEcommerce.inAmount = bankInfoEcommerce.inAmount + 0.2 * totalAmount;
+  bankInfoEcommerce.inAmount = bankInfoEcommerce.inAmount + totalAmount;
 
   await bankInfoEcommerce.save();
 
@@ -102,6 +102,13 @@ exports.admintransaction = catchAsyncErrors(async (req, res, next) => {
 exports.suppliertransaction = catchAsyncErrors(async (req, res, next) => {
   const { transactionId } = req.body;
   const supplierAccount = 1234;
+  const ecommerceAccount = 12345;
+
+  const bankInfoEcommerce = await Bank.findOne({
+    accountNumber: ecommerceAccount,
+  });
+
+
 
   const supplierTransaction = await transactionModel.findOne({
     transactionId: transactionId,
@@ -115,6 +122,13 @@ exports.suppliertransaction = catchAsyncErrors(async (req, res, next) => {
   const bankInfoSupplier = await Bank.findOne({
     accountNumber: supplierAccount,
   });
+
+  bankInfoEcommerce.inAmount = bankInfoEcommerce.inAmount - 0.8*totalAmount ;
+
+  bankInfoEcommerce.outAmount = bankInfoEcommerce.outAmount + 0.8*totalAmount ;
+
+  await bankInfoEcommerce.save();
+
 
   bankInfoSupplier.inAmount = bankInfoSupplier.inAmount + 0.8 * totalAmount;
 
