@@ -10,6 +10,4 @@ router.route("/suppliertransaction").post(suppliertransaction);
 router.route("/bankinfo").get(bankInfo);
 
 
-
-
 module.exports = router
